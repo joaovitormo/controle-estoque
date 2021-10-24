@@ -1,70 +1,169 @@
 <div class="d-flex" id="wrapper">
   <!-- Sidebar-->
   <div class="border-end bg-white" id="sidebar-wrapper">
-    <div class="sidebar-heading border-bottom bg-light"><strong><i class="fa fa-cog" aria-hidden="true"></i> CONTROLE DE ESTOQUE</strong></div>
+    <div class="sidebar-heading border-bottom bg-light"><strong><i class="fa fa-cog" aria-hidden="true"></i> CONTROLE DE
+        ESTOQUE</strong></div>
     <div class="list-group list-group-flush">
-        <a routerLink="/painel" class="list-group-item list-group-item-action list-group-item-light p-3"><i class="fa fa-tachometer" aria-hidden="true"></i>
-          Dashboard</a>
-        <a routerLink="/produtos" class="list-group-item list-group-item-action list-group-item-light p-3"><i class="fa fa-plug" aria-hidden="true"></i> Produtos</a>
-        <a routerLink="/clientes" class="list-group-item list-group-item-action list-group-item-light p-3"><i class="fa fa-users" aria-hidden="true"></i> Clientes</a>
-        <a routerLink="/fornecedores" class="list-group-item list-group-item-action list-group-item-light p-3"><i class="fa fa-truck" aria-hidden="true"></i>
-          Fornecedores</a>
-        <a routerLink="/vendas" class="list-group-item list-group-item-action list-group-item-light p-3"><i class="fa fa-money" aria-hidden="true"></i>
-          Vendas</a>
-        <a routerLink="/entrar" class="list-group-item list-group-item-action list-group-item-light p-3"><i class="fa fa-power-off" aria-hidden="true"></i>
-          Sair</a>
+      <a routerLink="/painel" class="list-group-item list-group-item-action list-group-item-light p-3"><i
+          class="fa fa-tachometer" aria-hidden="true"></i>
+        Dashboard</a>
+      <a routerLink="/produtos" class="list-group-item list-group-item-action list-group-item-light p-3"><i
+          class="fa fa-plug" aria-hidden="true"></i> Produtos</a>
+      <a routerLink="/clientes" class="list-group-item list-group-item-action list-group-item-light p-3"><i
+          class="fa fa-users" aria-hidden="true"></i> Clientes</a>
+      <a routerLink="/fornecedores" class="list-group-item list-group-item-action list-group-item-light p-3"><i
+          class="fa fa-truck" aria-hidden="true"></i>
+        Fornecedores</a>
+      <a routerLink="/vendas" class="list-group-item list-group-item-action list-group-item-light p-3"><i
+          class="fa fa-money" aria-hidden="true"></i>
+        Vendas</a>
+      <a routerLink="/entrar" class="list-group-item list-group-item-action list-group-item-light p-3"><i
+          class="fa fa-power-off" aria-hidden="true"></i>
+        Sair</a>
     </div>
-</div>
+  </div>
   <!-- Page content wrapper-->
   <div id="page-content-wrapper">
-      <!-- Top navigation-->
-      <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-          <div class="container-fluid">
-              <h4><i class="fa fa-home" aria-hidden="true"></i>
-                JV MATERIAIS P/ CONSTRUÇÃO</h4>
-              <button class="btn btn-primary" id="sidebarToggle"><i class="fa fa-bars" aria-hidden="true"></i></button>
-          </div>
-      </nav>
-      <!-- Page content-->
+    <!-- Top navigation-->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
       <div class="container-fluid">
-          <h1 class="mt-5 pl-4">Clientes</h1>
-          <div class="pt-3 pl-4 d-flex">
-            <button class="btn btn-success">Adicionar Clientes</button>
-          </div>
-          <div class="p-3 m-5 d-flex">
-            <table class="table table-hover">
-              <thead>
-                <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Primeiro</th>
-                  <th scope="col">Último</th>
-                  <th scope="col">Nickname</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <th scope="row">1</th>
-                  <td>Mark</td>
-                  <td>Otto</td>
-                  <td>@mdo</td>
-                </tr>
-                <tr>
-                  <th scope="row">2</th>
-                  <td>Jacob</td>
-                  <td>Thornton</td>
-                  <td>@fat</td>
-                </tr>
-                <tr>
-                  <th scope="row">3</th>
-                  <td colspan="2">Larry the Bird</td>
-                  <td>@twitter</td>
-                </tr>
-              </tbody>
-            </table>
+        <h4><i class="fa fa-home" aria-hidden="true"></i>
+          JV MATERIAIS P/ CONSTRUÇÃO</h4>
+        <button class="btn btn-primary" id="sidebarToggle"><i class="fa fa-bars" aria-hidden="true"></i></button>
       </div>
+    </nav>
+    <!-- Page content-->
+    <div class="container-fluid">
+      <h1 class="mt-5 pl-4">Clientes</h1>
+      <div class="pt-3 pl-4 d-flex">
+        <button class="btn btn-success" data-toggle="modal" data-target="#novoRegistro">Adicionar Clientes</button>
+      </div>
+      <div class="p-3 m-5 d-flex">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Nome do cliente</th>
+              <th scope="col">Email</th>
+              <th scope="col">Celular</th>
+              <th scope="col">Data de Cadastro</th>
+              <th scope="col">Modificações</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor='let item of listaClientes'>
+              <th scope="row">{{item.id}}</th>
+              <td>{{item.nome}}</td>
+              <td>{{item.email}}</td>
+              <td>{{item.celular}}</td>
+              <td>{{ item.dataCadastro | date: "dd/MM/yyyy" }} às {{ item.dataCadastro | date: "HH:mm" }}</td>
+              <td>
+                <button (click)='findByIdCliente(item.id)' class="btn btn-info mr-3" data-toggle="modal" data-target="#editarRegistro">Editar</button>
+                <button (click)='findByIdCliente(item.id)' class="btn btn-danger" data-toggle="modal" data-target="#apagarRegistro">Apagar</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
-</div>
-<!-- Core theme JS-->
-<script src="js/scripts.js"></script>
 
+  <!-- Modal - Incluir registro -->
+  <div class="modal fade" id="novoRegistro" tabindex="-1" role="dialog" aria-labelledby="TituloModalCentralizado"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="TituloModalCentralizado">Novo Cliente</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
 
+          <div class="form-group">
+            <label for="titulo">Nome</label>
+            <input [(ngModel)]='cliente.nome' type="text" class="form-control" id="titulo" placeholder="Digite o nome">
+          </div>
+
+          <div class="form-group">
+            <label for="email">E-mail</label>
+            <input [(ngModel)]='cliente.email' type="email" class="form-control" name="email" id="email"
+              placeholder="Digite o E-mail">
+          </div>
+
+          <div class="form-group">
+            <label for="numero">Celular</label>
+            <input [(ngModel)]='cliente.celular' type="number" class="form-control" name="numero" id="numero"
+              placeholder="Digite o número de celular">
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+          <button (click)='cadastrar()' type="button" class="btn btn-success" data-dismiss="modal">Salvar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+   <!-- Modal - Editar registro -->
+   <div class="modal fade" id="editarRegistro" tabindex="-1" role="dialog" aria-labelledby="TituloModalCentralizado"
+   aria-hidden="true">
+   <div class="modal-dialog modal-dialog-centered" role="document">
+     <div class="modal-content">
+       <div class="modal-header">
+         <h5 class="modal-title" id="TituloModalCentralizado">Editar Cliente</h5>
+         <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+           <span aria-hidden="true">&times;</span>
+         </button>
+       </div>
+       <div class="modal-body">
+         <div class="form-group">
+           <label for="titulo">Nome</label>
+           <input [(ngModel)]='clienteSelecionado.nome' type="text" class="form-control" id="titulo" placeholder="Digite o nome" >
+         </div>
+
+         <div class="form-group">
+           <label for="email">E-mail</label>
+           <input [(ngModel)]='clienteSelecionado.email' type="email" class="form-control" name="email" id="email"
+             placeholder="Digite o E-mail">
+         </div>
+
+         <div class="form-group">
+           <label for="numero">Celular</label>
+           <input [(ngModel)]='clienteSelecionado.celular' type="number" class="form-control" name="numero" id="numero"
+             placeholder="Digite o número de celular">
+         </div>
+
+       </div>
+       <div class="modal-footer">
+         <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+         <button (click)='atualizar()' type="button" class="btn btn-success" data-dismiss="modal">Salvar</button>
+       </div>
+     </div>
+   </div>
+ </div>
+  <!-- Modal - Apagar registro -->
+  <div class="modal fade" id="apagarRegistro" tabindex="-1" role="dialog" aria-labelledby="TituloModalCentralizado"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="TituloModalCentralizado">Apagar Cliente</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Você deseja apagar esse registro permanentemente?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+          <button (click)='apagar(clienteSelecionado.id)' type="button" class="btn btn-success" data-dismiss="modal">Excluir</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Core theme JS-->
+  <script src="js/scripts.js"></script>
