@@ -15,6 +15,7 @@ export class ClienteService {
     headers: new HttpHeaders().set('Authorization', environment.token)
   }
 
+  
   getAllCliente(): Observable<Cliente[]> {
     return this.http.get<Cliente[]>('http://localhost:8080/clientes', this.token)
   }

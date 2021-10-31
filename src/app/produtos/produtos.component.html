@@ -29,42 +29,170 @@
       <div class="container-fluid">
           <h1 class="mt-5 pl-4">Produtos</h1>
           <div class="pt-3 pl-4 d-flex">
-            <button class="btn btn-success">Adicionar Produto</button>
+            <button data-toggle="modal" data-target="#novoRegistro" class="btn btn-success">Adicionar Produto</button>
           </div>
-          <div class="p-3 m-5 d-flex">
+          <div class="p-0 m-5 d-flex flex-wrap border">
+            <input type="text" class="form-control" id="titulo" placeholder="Digite para pesquisar um registro" [(ngModel)]='tituloPost' (keyup)='findByTituloPostagem()'>
             <table class="table table-hover">
               <thead>
                 <tr>
                   <th scope="col">#</th>
-                  <th scope="col">Primeiro</th>
-                  <th scope="col">Último</th>
-                  <th scope="col">Nickname</th>
+                  <th scope="col">Nome</th>
+                  <th scope="col">Categoria</th>
+                  <th scope="col">Valor</th>
+                  <th scope="col">Qntd</th>
+                  <th scope="col">Posição no estoque</th>
+                  <th scope="col">Id Fornecedor</th>
+                  <th scope="col">Data de cadastro</th>
+                  <th scope="col">Modificações</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <th scope="row">1</th>
-                  <td>Mark</td>
-                  <td>Otto</td>
-                  <td>@mdo</td>
-                </tr>
-                <tr>
-                  <th scope="row">2</th>
-                  <td>Jacob</td>
-                  <td>Thornton</td>
-                  <td>@fat</td>
-                </tr>
-                <tr>
-                  <th scope="row">3</th>
-                  <td colspan="2">Larry the Bird</td>
-                  <td>@twitter</td>
+                <tr *ngFor='let item of listaProdutos'>
+                  <th scope="row">{{item.id}}</th>
+                  <td>{{item.nome}}</td>
+                  <td>{{item.categoria}}</td>
+                  <td>R${{item.valor}}</td>
+                  <td>{{item.quantidade}}</td>
+                  <td>{{item.posicao}}</td>
+                  <td>{{item.fornecedor}}</td>
+                  <td>{{ item.dataCadastro | date: "dd/MM/yyyy" }} às {{ item.dataCadastro | date: "HH:mm" }}</td>
+                  <td>
+                    <button (click)='findByIdProduto(item.id)' class="btn btn-info mr-3" data-toggle="modal" data-target="#editarRegistro">Editar</button>
+                    <button (click)='findByIdProduto(item.id)' class="btn btn-danger" data-toggle="modal" data-target="#apagarRegistro">Apagar</button>
+                  </td>
                 </tr>
               </tbody>
             </table>
+          </div>
+        </div>
       </div>
-  </div>
-</div>
-<!-- Core theme JS-->
-<script src="js/scripts.js"></script>
 
+      <!-- Modal - Incluir registro -->
+      <div class="modal fade" id="novoRegistro" tabindex="-1" role="dialog" aria-labelledby="TituloModalCentralizado"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="TituloModalCentralizado">Novo Produto</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
 
+              <div class="form-group">
+                <label for="titulo">Nome</label>
+                <input [(ngModel)]='produto.nome' type="text" class="form-control" id="titulo" placeholder="Digite o nome">
+              </div>
+              <div class="form-group">
+                <label for="foto">Foto</label>
+                <input [(ngModel)]='produto.foto' type="text" class="form-control" id="foto" placeholder="Digite o link da foto">
+              </div>
+              <div class="form-group">
+                <label for="usuario">Categoria</label>
+                <select [(ngModel)]='produto.categoria' class="form-control" name="categoria" id="categoria">
+                  <option>Selecione uma categoria:</option>
+                  <option value="Hidraulica">Hidraulica</option>
+                  <option value="Outra">Outra</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="valor">Valor</label>
+                <input [(ngModel)]='produto.valor' type="number" class="form-control" name="email" id="email"
+                  placeholder="Digite o valor">
+              </div>
+
+              <div class="form-group">
+                <label for="quantidade">Quantidade</label>
+                <input [(ngModel)]='produto.quantidade' type="number" class="form-control" name="quantidade" id="quantidade"
+                  placeholder="Digite a quantidade">
+              </div>
+              <div class="form-group">
+                <label for="posicao">Posição no estoque</label>
+                <input [(ngModel)]='produto.posicao' type="text" class="form-control" id="posicao" placeholder="Digite a posição no estoque">
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+              <button (click)='cadastrar()' type="button" class="btn btn-success" data-dismiss="modal">Salvar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+       <!-- Modal - Editar registro -->
+       <div class="modal fade" id="editarRegistro" tabindex="-1" role="dialog" aria-labelledby="TituloModalCentralizado"
+       aria-hidden="true">
+       <div class="modal-dialog modal-dialog-centered" role="document">
+         <div class="modal-content">
+           <div class="modal-header">
+             <h5 class="modal-title" id="TituloModalCentralizado">Editar Produto</h5>
+             <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+               <span aria-hidden="true">&times;</span>
+             </button>
+           </div>
+           <div class="modal-body">
+
+            <div class="form-group">
+              <label for="titulo">Nome</label>
+              <input [(ngModel)]='produtoSelecionado.nome' type="text" class="form-control" id="titulo" placeholder="Digite o nome">
+            </div>
+            <div class="form-group">
+              <label for="foto">Foto</label>
+              <input [(ngModel)]='produtoSelecionado.foto' type="text" class="form-control" id="foto" placeholder="Digite o link da foto">
+            </div>
+            <div class="form-group">
+              <label for="usuario">Categoria</label>
+              <select [(ngModel)]='produtoSelecionado.categoria' class="form-control" name="categoria" id="categoria">
+                <option>Selecione uma categoria:</option>
+                <option value="Hidraulica">Hidraulica</option>
+                <option value="Outra">Outra</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="valor">Valor</label>
+              <input [(ngModel)]='produtoSelecionado.valor' type="number" class="form-control" name="email" id="email"
+                placeholder="Digite o valor">
+            </div>
+
+            <div class="form-group">
+              <label for="quantidade">Quantidade</label>
+              <input [(ngModel)]='produtoSelecionado.quantidade' type="number" class="form-control" name="quantidade" id="quantidade"
+                placeholder="Digite a quantidade">
+            </div>
+            <div class="form-group">
+              <label for="posicao">Posição no estoque</label>
+              <input [(ngModel)]='produtoSelecionado.posicao' type="text" class="form-control" id="posicao" placeholder="Digite a posição no estoque">
+            </div>
+          </div>
+           <div class="modal-footer">
+             <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+             <button (click)='atualizar()' type="button" class="btn btn-success" data-dismiss="modal">Salvar</button>
+           </div>
+         </div>
+       </div>
+     </div>
+      <!-- Modal - Apagar registro -->
+      <div class="modal fade" id="apagarRegistro" tabindex="-1" role="dialog" aria-labelledby="TituloModalCentralizado"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="TituloModalCentralizado">Apagar Produto</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p>Você deseja apagar esse registro permanentemente?</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+              <button (click)='apagar(produtoSelecionado.id)' type="button" class="btn btn-success" data-dismiss="modal">Excluir</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Core theme JS-->
+      <script src="js/scripts.js"></script>

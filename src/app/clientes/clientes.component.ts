@@ -15,6 +15,7 @@ export class ClientesComponent implements OnInit {
   listaClientes: Cliente[]
   clienteSelecionado: Cliente = new Cliente()
   idCliente: number
+  tituloPost: string
 
 
   constructor(
@@ -32,6 +33,16 @@ export class ClientesComponent implements OnInit {
     this.findAllClientes()
     console.log(environment.token)
 
+  }
+
+  findByTituloPostagem(){
+    if(this.tituloPost == ''){
+      this.findAllClientes()
+    } else {
+      this.clienteService.getByNomeCliente(this.tituloPost).subscribe((resp: Cliente[]) => {
+        this.listaClientes = resp
+      })
+    }
   }
 
   findByIdCliente(id: number){
@@ -65,7 +76,7 @@ export class ClientesComponent implements OnInit {
   cadastrar(){
     this.clienteService.postCliente(this.cliente).subscribe((resp: Cliente)=> {
       this.cliente = resp
-      alert('Tema cadastrado com sucesso!')
+      alert('Cliente cadastrado com sucesso!')
       this.findAllClientes()
       this.cliente = new Cliente()
     })
