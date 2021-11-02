@@ -55,8 +55,8 @@
                   <td>R${{item.valor}}</td>
                   <td>{{item.quantidade}}</td>
                   <td>{{item.posicao}}</td>
-                  <td>{{item.fornecedor}}</td>
-                  <td>{{ item.dataCadastro | date: "dd/MM/yyyy" }} às {{ item.dataCadastro | date: "HH:mm" }}</td>
+                  <td>{{item.fornecedores.nome}}</td>
+                  <td>{{item.dataCadastro | date: "dd/MM/yyyy" }} às {{ item.dataCadastro | date: "HH:mm" }}</td>
                   <td>
                     <button (click)='findByIdProduto(item.id)' class="btn btn-info mr-3" data-toggle="modal" data-target="#editarRegistro">Editar</button>
                     <button (click)='findByIdProduto(item.id)' class="btn btn-danger" data-toggle="modal" data-target="#apagarRegistro">Apagar</button>
@@ -95,6 +95,12 @@
                   <option>Selecione uma categoria:</option>
                   <option value="Hidraulica">Hidraulica</option>
                   <option value="Outra">Outra</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="fornecedor">Fornecedor</label>
+                <select [(ngModel)]='idFornecedor' class="form-control" name="fornecedor" id="fornecedor" (change)='findByIdFornecedor(fornecedor.id)'>
+                  <option *ngFor='let fornecedor of listaFornecedores' value="{{fornecedor.id}}">{{fornecedor.nome}}</option>
                 </select>
               </div>
               <div class="form-group">

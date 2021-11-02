@@ -70,7 +70,7 @@ export class FornecedoresComponent implements OnInit {
   }
 
   cadastrar(){
-    this.fornecedorService.postFornecedor(this.fornecedor).subscribe((resp: Fornecedor)=> {
+    this.fornecedorService.postFornecedores(this.fornecedor).subscribe((resp: Fornecedor)=> {
       this.fornecedor = resp
       alert('Fornecedor cadastrado com sucesso!')
       this.findAllFornecedores()

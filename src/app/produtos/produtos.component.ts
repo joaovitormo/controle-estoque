@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment.prod';
+import { Fornecedor } from '../model/fornecedor';
 import { Produto } from '../model/produto';
+import { FornecedorService } from '../service/fornecedor.service';
 import { ProdutoService } from '../service/produto.service';
 
 @Component({
@@ -16,9 +18,16 @@ export class ProdutosComponent implements OnInit {
   produtoSelecionado: Produto = new Produto()
   tituloPost: string
 
+  fornecedor: Fornecedor = new Fornecedor()
+  listaFornecedores: Fornecedor[]
+  fornecedorSelecionado: Fornecedor = new Fornecedor()
+  idFornecedor: number
+  nomeFornecedor: string
+
   constructor(
     private router: Router,
     private produtoService: ProdutoService,
+    private fornecedorService: FornecedorService,
   ) { }
 
   ngOnInit() {
@@ -29,6 +38,23 @@ export class ProdutosComponent implements OnInit {
     }
 
     this.findAllProdutos()
+    this.findAllFornecedores()
+
+  }
+
+
+  findAllFornecedores(){
+    this.fornecedorService.getAllFornecedor().subscribe((resp: Fornecedor[])=> {
+      this.listaFornecedores = resp
+    })
+
+  }
+
+
+  findByIdFornecedor(idFornecedor: number){
+    this.fornecedorService.getByIdFornecedor(idFornecedor).subscribe((resp: Fornecedor)=> {
+      this.fornecedorSelecionado = resp
+    })
   }
 
   findByTituloPostagem(){
@@ -69,11 +95,14 @@ export class ProdutosComponent implements OnInit {
   }
 
   cadastrar(){
+    this.fornecedor.id = this.idFornecedor
+    this.produto.fornecedores = this.fornecedor
     this.produtoService.postProduto(this.produto).subscribe((resp: Produto)=> {
       this.produto = resp
       alert('Produto cadastrado com sucesso!')
       this.findAllProdutos()
       this.produto = new Produto()
+      console.log(this.produto)
     })
   }
 

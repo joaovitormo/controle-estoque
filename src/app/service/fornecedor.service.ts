@@ -17,27 +17,27 @@ export class FornecedorService {
 
 
   getAllFornecedor(): Observable<Fornecedor[]> {
-    return this.http.get<Fornecedor[]>('http://localhost:8080/fornecedor', this.token)
+    return this.http.get<Fornecedor[]>('http://localhost:8080/fornecedores', this.token)
   }
 
   getByIdFornecedor(id: number): Observable<Fornecedor>{
-    return this.http.get<Fornecedor>(`http://localhost:8080/fornecedor/${id}`, this.token)
+    return this.http.get<Fornecedor>(`http://localhost:8080/fornecedores/${id}`, this.token)
   }
 
   getByNomeFornecedor(nome: string): Observable<Fornecedor[]>{
-    return this.http.get<Fornecedor[]>(`http://localhost:8080/fornecedor/nome/${nome}`, this.token)
+    return this.http.get<Fornecedor[]>(`http://localhost:8080/fornecedores/nome/${nome}`, this.token)
   }
 
-  postFornecedor(tema: Fornecedor): Observable<Fornecedor>{
-    return this.http.post<Fornecedor>('http://localhost:8080/fornecedor', tema, this.token)
+  postFornecedores(tema: Fornecedor): Observable<Fornecedor>{
+    return this.http.post<Fornecedor>('http://localhost:8080/fornecedores', tema, this.token)
   }
 
   putFornecedor(tema: Fornecedor): Observable<Fornecedor>{
-    return this.http.put<Fornecedor>(`http://localhost:8080/fornecedor/alterar`, tema, this.token)
+    return this.http.put<Fornecedor>(`http://localhost:8080/fornecedores/alterar`, tema, this.token)
   }
 
   deleteFornecedor(id: number) {
-    return this.http.delete(`http://localhost:8080/fornecedor/${id}`, this.token)
+    return this.http.delete(`http://localhost:8080/fornecedores/${id}`, this.token)
   }
 }
 

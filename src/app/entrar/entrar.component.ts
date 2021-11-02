@@ -22,7 +22,16 @@ export class EntrarComponent implements OnInit {
 
   ngOnInit(){
     window.scroll(0,0)
-  }
+
+    this.load();
+}
+
+    load() {
+      //Session storage salva os dados como string
+      (sessionStorage.refresh == 'true' || !sessionStorage.refresh) && location.reload();
+      sessionStorage.refresh = false;
+
+      }
 
   entrar(){
     this.auth.entrar(this.userLogin).subscribe((resp: UsuarioLogin)=> {

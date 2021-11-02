@@ -1,4 +1,5 @@
 import { Fornecedor } from './fornecedor';
+import { Pedido } from './pedido';
 export class Produto {
   public id: number;
   public nome: string;
@@ -8,5 +9,6 @@ export class Produto {
   public quantidade: number;
   public valor: number;
   public dataCadastro: Date;
-  public fornecedor: Fornecedor
+  public fornecedores: Fornecedor
+  public pedidos: Pedido
 }
