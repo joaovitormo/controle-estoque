@@ -17,6 +17,10 @@ import { ClientesComponent } from './clientes/clientes.component';
 import { FornecedoresComponent } from './fornecedores/fornecedores.component';
 import { VendasComponent } from './vendas/vendas.component';
 import { RealizarVendaComponent } from './realizar-venda/realizar-venda.component';
+import { MyBarChartComponent } from './my-bar-chart/my-bar-chart.component';
+import { ChartsModule } from 'ng2-charts';
+import { VerticalBarChartComponent } from './vertical-bar-chart/vertical-bar-chart.component';
+
 
 @NgModule({
   declarations: [
@@ -28,7 +32,9 @@ import { RealizarVendaComponent } from './realizar-venda/realizar-venda.componen
     ClientesComponent,
     FornecedoresComponent,
     VendasComponent,
-    RealizarVendaComponent
+    RealizarVendaComponent,
+    MyBarChartComponent,
+    VerticalBarChartComponent
   ],
   imports: [
     BrowserModule,
@@ -37,7 +43,7 @@ import { RealizarVendaComponent } from './realizar-venda/realizar-venda.componen
     FormsModule,
     ModalModule,
     ModalModule.forRoot(),
-    OrderModule,
+    ChartsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

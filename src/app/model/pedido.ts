@@ -8,4 +8,5 @@ export class Pedido {
   public dataCadastro: Date;
   public produto: Produto[];
   public cliente: Cliente;
+  Produto: any;
 }

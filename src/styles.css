@@ -11308,3 +11308,18 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
   }
 }
 
+.bg-allblackPainel {
+  background-color: #212529 !important;
+  color: #eee !important;
+}
+
+.btn-allblack {
+  background-color: #212529 !important;
+  color: #eee !important;
+}
+
+.btn-allblack:hover {
+  background-color: #303438 !important;
+  color: #eee !important;
+}
+

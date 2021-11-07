@@ -1,23 +1,23 @@
-<div class="d-flex" id="wrapper">
+<div class="d-flex " id="wrapper">
   <!-- Sidebar-->
-  <div class="border-end bg-white" id="sidebar-wrapper">
-    <div class="sidebar-heading border-bottom bg-light"><strong><i class="fa fa-cog" aria-hidden="true"></i> CONTROLE DE
+  <div class="border-end bg-allblackPainel" id="sidebar-wrapper">
+    <div class="sidebar-heading bg-allblackPainel"><strong><i class="fa fa-cog" aria-hidden="true"></i> CONTROLE DE
         ESTOQUE</strong></div>
-    <div class="list-group list-group-flush">
-      <a routerLink="/painel" class="list-group-item list-group-item-action list-group-item-light p-3"><i
+    <div class="list-group list-group-flush bg-allblackPainel">
+      <a routerLink="/painel" class="btn-allblack list-group-item list-group-item-action list-group-item-light p-3"><i
           class="fa fa-tachometer" aria-hidden="true"></i>
         Dashboard</a>
-      <a routerLink="/produtos" class="list-group-item list-group-item-action list-group-item-light p-3"><i
+      <a routerLink="/produtos" class="btn-allblack list-group-item list-group-item-action list-group-item-light p-3"><i
           class="fa fa-plug" aria-hidden="true"></i> Produtos</a>
-      <a routerLink="/clientes" class="list-group-item list-group-item-action list-group-item-light p-3"><i
+      <a routerLink="/clientes" class="btn-allblack list-group-item list-group-item-action list-group-item-light p-3"><i
           class="fa fa-users" aria-hidden="true"></i> Clientes</a>
-      <a routerLink="/fornecedores" class="list-group-item list-group-item-action list-group-item-light p-3"><i
+      <a routerLink="/fornecedores" class="btn-allblack list-group-item list-group-item-action list-group-item-light p-3"><i
           class="fa fa-truck" aria-hidden="true"></i>
         Fornecedores</a>
-      <a routerLink="/vendas" class="list-group-item list-group-item-action list-group-item-light p-3"><i
+      <a routerLink="/vendas" class="btn-allblack list-group-item list-group-item-action list-group-item-light p-3"><i
           class="fa fa-money" aria-hidden="true"></i>
         Vendas</a>
-      <a routerLink="/entrar" class="list-group-item list-group-item-action list-group-item-light p-3"><i
+      <a routerLink="/entrar" class="btn-allblack bg-allblacklist-group-item list-group-item-action list-group-item-light p-3"><i
           class="fa fa-power-off" aria-hidden="true"></i>
         Sair</a>
     </div>
@@ -25,7 +25,7 @@
   <!-- Page content wrapper-->
   <div id="page-content-wrapper">
     <!-- Top navigation-->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+    <nav class="navbar navbar-expand-lg bg-allblackPainel border-bottom">
       <div class="container-fluid">
         <h4><i class="fa fa-home" aria-hidden="true"></i>
           JV MATERIAIS P/ CONSTRUÇÃO</h4>
@@ -35,6 +35,66 @@
     <!-- Page content-->
     <div class="container-fluid">
       <h1 class="mt-5 pl-4">Venda</h1>
+      <div class="pt-3 pl-4 d-flex">
+      </div>
+      <div class="p-0 m-5 d-flex flex-wrap border">
+        <input type="text" class="form-control" id="titulo" placeholder="Digite para pesquisar um registro" [(ngModel)]='tituloPost' (keyup)='findByTituloPostagem()'>
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Nome</th>
+              <th scope="col">Valor</th>
+              <th scope="col">Posição no estoque</th>
+              <th scope="col">Adicionar ao carrinho</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor='let item of listaProdutos'>
+              <th scope="row">{{item.id}}</th>
+              <td>{{item.nome}}</td>
+              <td>R${{item.valor}}</td>
+              <td>{{item.posicao}}</td>
+              <td>
+                <button (click)='adicionarLista(item.id)' data-toggle="modal" data-target="#novoRegistro" class="btn btn-success">Adicionar ao carrinho</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="p-0 m-5 d-flex flex-wrap border">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Nome</th>
+              <th scope="col">Categoria</th>
+              <th scope="col">Valor</th>
+              <th scope="col">Qntd</th>
+              <th scope="col">Posição no estoque</th>
+              <th scope="col">Id Fornecedor</th>
+              <th scope="col">Data de cadastro</th>
+              <th scope="col">Modificações</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor='let item listaPedido'>
+              <th scope="row">{{item.id}}</th>
+              <td>{{item.nome}}</td>
+              <td>{{item.categoria}}</td>
+              <td>R${{item.valor}}</td>
+              <td>{{item.quantidade}}</td>
+              <td>{{item.posicao}}</td>
+              <td>{{item.fornecedores.nome}}</td>
+              <td>{{item.dataCadastro | date: "dd/MM/yyyy" }} às {{ item.dataCadastro | date: "HH:mm" }}</td>
+              <td>
+                <button class="btn btn-info mr-3" data-toggle="modal" data-target="#editarRegistro">Editar</button>
+                <button class="btn btn-danger" data-toggle="modal" data-target="#apagarRegistro">Apagar</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
   <!-- Core theme JS-->
